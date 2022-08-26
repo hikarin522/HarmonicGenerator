@@ -1,0 +1,9 @@
+#!/bin/bash
+set -u
+
+dotnet format --verify-no-changes "$(dirname $0)/../"
+if [ $? -ne 0 ]; then
+    echo "format error"
+    dotnet format "$(dirname $0)/../"
+    exit 1
+fi

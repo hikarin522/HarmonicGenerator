@@ -1,0 +1,20 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+
+    <Version>1.0.0</Version>
+    <Authors>hikarin522</Authors>
+    <Copyright>(c) 2022 hikarin522.</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/hikarin522/HarmonicGenerator</RepositoryUrl>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>SourceGenerator</PackageTags>
+    <Description>Integrate the C# Source Generator with other source generators.</Description>
+  </PropertyGroup>
+
+</Project>

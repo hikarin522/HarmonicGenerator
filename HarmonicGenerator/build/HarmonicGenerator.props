@@ -1,0 +1,8 @@
+<Project>
+
+  <PropertyGroup>
+    <HarmonicGeneratorDeleteGeneratedFilesOnClean>true</HarmonicGeneratorDeleteGeneratedFilesOnClean>
+    <HarmonicGeneratorIncludeGeneratedFilesNoneItems>true</HarmonicGeneratorIncludeGeneratedFilesNoneItems>
+  </PropertyGroup>
+
+</Project>

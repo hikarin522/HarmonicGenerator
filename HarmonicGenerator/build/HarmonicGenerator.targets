@@ -1,0 +1,33 @@
+<Project>
+
+  <PropertyGroup>
+    <HarmonicGeneratorOutputPath Condition="'$(HarmonicGeneratorOutputPath)' == ''">$(CompilerGeneratedFilesOutputPath)</HarmonicGeneratorOutputPath>
+    <HarmonicGeneratorOutputPath Condition="'$(HarmonicGeneratorOutputPath)' == ''">$(GeneratedFilesOutputPath)</HarmonicGeneratorOutputPath>
+    <HarmonicGeneratorOutputPath Condition="'$(HarmonicGeneratorOutputPath)' == ''">$(IntermediateOutputPath)generated</HarmonicGeneratorOutputPath>
+    <HarmonicGeneratorDependsOn>BeforeHarmonicGenerator;CoreHarmonicGenerator;AfterHarmonicGenerator</HarmonicGeneratorDependsOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_HarmonicGeneratorGeneratedFiles Include="$(HarmonicGeneratorOutputPath)\**\*.cs" />
+    <Compile Remove="@(_HarmonicGeneratorGeneratedFiles)" />
+    <None Include="@(_HarmonicGeneratorGeneratedFiles)" Condition="'$(HarmonicGeneratorIncludeGeneratedFilesNoneItems)' == 'true' and '$(EnableDefaultNoneItems)' == 'true'" />
+  </ItemGroup>
+
+  <Target Name="HarmonicGenerator" BeforeTargets="BeforeCompile" DependsOnTargets="$(HarmonicGeneratorDependsOn)" Condition="'$(DisableHarmonicGenerator)' != 'true' and '$(DesignTimeBuild)' != 'true'" />
+
+  <Target Name="BeforeHarmonicGenerator" />
+  <Target Name="AfterHarmonicGenerator" />
+
+  <Target Name="CoreHarmonicGenerator">
+    <MakeDir Directories="$(HarmonicGeneratorOutputPath)" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Compile" Properties="Configuration=$(Configuration);DisableHarmonicGenerator=true;EmitCompilerGeneratedFiles=true;CompilerGeneratedFilesOutputPath=$(HarmonicGeneratorOutputPath)" />
+    <ItemGroup>
+      <HarmonicGeneratorGeneratedFiles Include="$(HarmonicGeneratorOutputPath)\**\*.cs" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="HarmonicGeneratorClean" AfterTargets="Clean" Condition="$(HarmonicGeneratorDeleteGeneratedFilesOnClean) == 'true'">
+    <RemoveDir Directories="$(HarmonicGeneratorOutputPath)" />
+  </Target>
+
+</Project>
