@@ -6,6 +6,12 @@
     <HarmonicGeneratorOutputPath Condition="'$(HarmonicGeneratorOutputPath)' == ''">$(IntermediateOutputPath)generated</HarmonicGeneratorOutputPath>
     <HarmonicGeneratorDependsOn>BeforeHarmonicGenerator;CoreHarmonicGenerator;AfterHarmonicGenerator</HarmonicGeneratorDependsOn>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="$(HarmonicGeneratorInternalBuild) == 'true'">
+    <DisableHarmonicGenerator>true</DisableHarmonicGenerator>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(HarmonicGeneratorOutputPath)</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
 
   <ItemGroup>
     <_HarmonicGeneratorGeneratedFiles Include="$(HarmonicGeneratorOutputPath)\**\*.cs" />
@@ -20,7 +26,7 @@
 
   <Target Name="CoreHarmonicGenerator">
     <MakeDir Directories="$(HarmonicGeneratorOutputPath)" />
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Compile" Properties="Configuration=$(Configuration);DisableHarmonicGenerator=true;EmitCompilerGeneratedFiles=true;CompilerGeneratedFilesOutputPath=$(HarmonicGeneratorOutputPath)" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Compile" Properties="Configuration=$(Configuration);HarmonicGeneratorInternalBuild=true" />
     <ItemGroup>
       <HarmonicGeneratorGeneratedFiles Include="$(HarmonicGeneratorOutputPath)\**\*.cs" />
     </ItemGroup>
